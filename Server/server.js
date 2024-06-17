@@ -30,7 +30,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 const corsOptions = {
-  origin: true, // Replace with your frontend's origin
+  origin: 'https://client-i3ia5vl4j-sanjayp2210s-projects.vercel.app/', // Replace with your frontend's origin
   credentials: true, // Allow credentials (cookies)
 };
 app.use(cors(corsOptions));
