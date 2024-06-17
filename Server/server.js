@@ -22,7 +22,8 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
   dotenv.config({ path: "Server/config/config.env" });
 }
 
-app.use('/', express.static(path.join(__dirname, 'public/images')));
+app.use(express.static(path.join(__dirname, "../Client/dist")));
+// app.use('/', express.static(path.join(__dirname, 'public/images')));
 app.use(cookieParser());
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -44,8 +45,6 @@ app.use('/api/user', userRouter);
 app.use('/api/contact', contactRouter);
 app.use('/api/technology', technologyRouter);
 app.use(errorMiddleware);
-
-app.use(express.static(path.join(__dirname, "../Client/dist")));
 
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../Client/dist/index.html"));

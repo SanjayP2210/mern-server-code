@@ -3,16 +3,7 @@
   "builds": [
     { "src": "Server/server.js", "use": "@vercel/node" }
   ],
-  "rewrites": [
-    { "source": "/Server/(.*)", "destination": "/Server/$1" },
-    { "source": "/(.*)", "destination": "/$1" }
-  ],
-  "redirects": [
-    { "source": "/old", "destination": "/new", "statusCode": 301 }
-  ],
-  "headers": [
+   "headers": [
     { "source": "/Server/(.*)", "headers": [{"key": "Access-Control-Allow-Origin", "value": "*"}] }
-  ],
-  "cleanUrls": true,
-  "trailingSlash": true
+  ]
 }
