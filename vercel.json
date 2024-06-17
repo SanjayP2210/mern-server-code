@@ -6,5 +6,16 @@
   "routes": [
     { "src": "/Server/(.*)", "dest": "Server/server.js" }
   ],
-  "rewrites": [{ "source": "/Server/(.*)", "destination": "/Server" }]
+  "rewrites": [
+    { "source": "/Server/(.*)", "destination": "/Server/$1" },
+    { "source": "/(.*)", "destination": "/$1" }
+  ],
+  "redirects": [
+    { "source": "/old", "destination": "/new", "statusCode": 301 }
+  ],
+  "headers": [
+    { "source": "/Server/(.*)", "headers": [{"key": "Access-Control-Allow-Origin", "value": "*"}] }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": true
 }
