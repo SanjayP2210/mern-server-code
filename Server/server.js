@@ -15,7 +15,6 @@ import contactRouter from './router/contactRouter.js';
 import authRouter from './router/authRouter.js';
 import technologyRouter from './router/technologyRouter.js';
 import errorMiddleware from './middleware/error.js';
-import cloudinary from 'cloudinary';
 import connectDatabase from './config/db.js';
 
 // Config
