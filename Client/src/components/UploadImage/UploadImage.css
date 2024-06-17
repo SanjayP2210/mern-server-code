@@ -1,0 +1,146 @@
+.image-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.panel {
+    margin: 15px auto;
+    max-width: 500px;
+    text-align: center;
+}
+
+.button_outer {
+    background: #B2f302;
+    border-radius: 30px;
+    text-align: center;
+    height: 40px;
+    display: inline-block;
+    transition: 0.2s;
+    position: relative;
+    overflow: hidden;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    font-weight: bold;
+}
+
+.btn_upload {
+    padding: 0.9rem 4rem;
+    color: black;
+    text-align: center;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 15px;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    font-weight: bold;
+}
+
+.btn_upload input {
+    position: absolute;
+    left: 0;
+    /* top: 0; */
+    width: 100%;
+    cursor: pointer;
+    opacity: 0;
+}
+
+.file_uploading {
+    width: 200px;
+    height: 10px;
+    margin-top: 20px;
+    background: #ccc;
+}
+
+.file_uploading .btn_upload {
+    display: none;
+}
+
+.processing_bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    border-radius: 30px;
+    background: #B2f302;
+    transition: 1.5s;
+}
+
+.file_uploading .processing_bar {
+    width: 100%;
+}
+
+.success_box {
+    display: none;
+    width: 50px;
+    height: 50px;
+    position: relative;
+}
+
+.success_box:before {
+    content: "";
+    display: block;
+    width: 9px;
+    height: 18px;
+    border-bottom: 6px solid #fff;
+    border-right: 6px solid #fff;
+    transform: rotate(45deg);
+    position: absolute;
+    left: 17px;
+    top: 10px;
+}
+
+.file_uploaded .success_box {
+    display: inline-block;
+}
+
+.file_uploaded {
+    margin-top: 0;
+    width: 50px;
+    background: #83ccd3;
+    height: 50px;
+}
+
+.uploaded_file_view {
+    max-width: 200px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    transition: 0.2s;
+    opacity: 0;
+    border: 2px solid #ddd;
+    padding: 15px;
+}
+
+.file_remove {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    background: #aaa;
+    line-height: 30px;
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    right: -15px;
+    top: -15px;
+    transition: background 0.2s;
+}
+
+.file_remove:hover {
+    background: #222;
+}
+
+.uploaded_file_view img {
+    max-width: 100%;
+}
+
+.uploaded_file_view.show {
+    opacity: 1;
+}
+
+.error_msg {
+    text-align: center;
+    color: #f00;
+}

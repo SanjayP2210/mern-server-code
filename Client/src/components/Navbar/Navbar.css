@@ -1,0 +1,76 @@
+.nav-container {
+  max-width: 1280px;
+  padding: 4.2rem 2.4rem;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  margin: 0 auto;
+}
+
+ul {
+  display: flex;
+  gap: 3.2rem;
+}
+
+ul li a {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  transition: transform 0.3s, color 0.3s;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+ul li a:before,
+ul li a:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 10px;
+  bottom: -10px;
+  background: radial-gradient(ellipse at center, #B2f302 0%, rgba(0, 0, 0, 0) 80%);
+}
+
+ul li a:before {
+  left: 0;
+}
+
+ul li a:after {
+  right: 0;
+  transform: translateY(-5px);
+  transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+ul li a.active:before {
+  width: 100%;
+  transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+ul li a.active:after {
+  background: transparent;
+  width: 100%;
+  transition: none;
+}
+
+ul li a.active {
+  transform: translateY(-5px);
+}
+
+ul li a:hover {
+  color: #B2f302;
+  transform: translateY(-5px);
+}
+
+ul li a:hover:before {
+  background: radial-gradient(ellipse at center, #fff 0%, rgba(0, 0, 0, 0) 80%);
+  width: 100%;
+  transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+ul li a:hover:after {
+  background: transparent;
+  width: 100%;
+  transition: none;
+}
