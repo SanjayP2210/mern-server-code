@@ -29,11 +29,11 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
-const corsOptions = {
-  origin: 'https://client-i3ia5vl4j-sanjayp2210s-projects.vercel.app/', // Replace with your frontend's origin
-  credentials: true, // Allow credentials (cookies)
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: 'https://client-i3ia5vl4j-sanjayp2210s-projects.vercel.app/', // Replace with your frontend's origin
+//   credentials: true, // Allow credentials (cookies)
+// };
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(express.urlencoded({ extended: true }));
