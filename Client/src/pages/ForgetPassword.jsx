@@ -17,8 +17,8 @@ const ForgetPassword = () => {
       });
       if (!response.isError) {
         toast.success(`Mail sent successfully to ${email}`);
-        setLoading(false);
       }
+      setLoading(false);
     } catch (error) {
       toast.error("error while forget password");
       setLoading(false);

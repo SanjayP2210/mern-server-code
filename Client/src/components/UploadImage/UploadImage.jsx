@@ -26,7 +26,6 @@ const UploadImage = ({ multiple = false, setImage, data, disabled }) => {
   const uploadFile = (e) => {
     // const selectedFile = file;
     // const value = file.value;
-    setFileUploading(true);
     let finalImages = previewImage || [];
     const selectedFiles = Array.from(e.target.files);
     selectedFiles.forEach(async (file) => {
@@ -34,7 +33,9 @@ const UploadImage = ({ multiple = false, setImage, data, disabled }) => {
       if (!["gif", "png", "jpg", "jpeg"].includes(ext)) {
         toast.error("Only gif, png, jpg,jpeg files are supported");
         imageRef.current.value = null;
+        return;
       } else {
+        setFileUploading(true);
         // btnOuter.addClass("file_uploading");
         //convert with media type
         // var uploadedFile = URL.createObjectURL(e.target.files[0]);

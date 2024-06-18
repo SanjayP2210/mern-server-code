@@ -20,8 +20,6 @@ const LoginRegister = () => {
         {/* <!-- Sign Up --> */}
         <div className="container__form container--signup signup-scrollbar">
           <Register bodyEle={bodyEle} />
-          <br />
-          <br />
         </div>
 
         {/* <!-- Sign In --> */}

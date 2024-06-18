@@ -141,6 +141,7 @@ export const UserForm = ({ isEdit = false, bodyEle }) => {
         mobileNumber: "",
       });
       dispatch(resetState());
+      setImage(null)
       if (location?.pathname === "/") {
         const container = document.querySelector(".login-container");
         container.classList.remove("right-panel-active");
@@ -200,6 +201,7 @@ export const UserForm = ({ isEdit = false, bodyEle }) => {
       if (isEdit) {
         dispatch(updateUser({ formData: formData, userID: userData?._id }));
       } else {
+        formData.append("image", image);
         dispatch(addUser(formData));
       }
     } catch (error) {
@@ -371,6 +373,8 @@ export const UserForm = ({ isEdit = false, bodyEle }) => {
             </div>
             {/* <UploadImage setImage={setImage} image={null} data={null} /> */}
             {renderButton()}
+            <br />
+            <br />
           </form>
         </div>
       ) : (

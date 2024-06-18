@@ -22,7 +22,7 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
   dotenv.config({ path: "Server/config/config.env" });
 }
 
-app.use(express.static(path.join(__dirname, "../Client/dist")));
+// app.use(express.static(path.join(__dirname, "../Client/dist")));
 // app.use('/', express.static(path.join(__dirname, 'public/images')));
 app.use(cookieParser());
 cloudinary.config({
@@ -32,11 +32,11 @@ cloudinary.config({
 });
 
 
-// const corsOptions = {
-//   origin: '*',
-//   credentials: true, // Allow credentials (cookies)
-// };
-app.use(cors());
+const corsOptions = {
+  origin: true, // Replace with your frontend's origin
+  credentials: true, // Allow credentials (cookies)
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(express.urlencoded({ extended: true }));
@@ -48,12 +48,9 @@ app.use('/api/contact', contactRouter);
 app.use('/api/technology', technologyRouter);
 app.use(errorMiddleware);
 
-app.get('/api/data', (req, res) => {
-  res.json({ message: 'Hello from backend!' });
-});
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../Client/dist/index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "../Client/dist/index.html"));
+// });
 
 // Handling Uncaught Exception
 process.on("uncaughtException", (err) => {
