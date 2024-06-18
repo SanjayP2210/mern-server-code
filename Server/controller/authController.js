@@ -16,7 +16,7 @@ const registerUser = async (req, res, next) => {
                 url: result?.secure_url,
             };
         } else {
-            image = req?.file?.filename || body?.image[0];
+            image = req?.file?.filename || dataJson?.image[0];
         }
         const technology = req.body.technology.split(',');
         const isFound = await userModel.findOne({ email: dataJson.email });

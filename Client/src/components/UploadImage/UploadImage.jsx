@@ -30,33 +30,39 @@ const UploadImage = ({ multiple = false, setImage, data, disabled }) => {
     const selectedFiles = Array.from(e.target.files);
     selectedFiles.forEach(async (file) => {
       var ext = file.type.split("/").pop().toLowerCase();
-      if (!["gif", "png", "jpg", "jpeg"].includes(ext)) {
-        toast.error("Only gif, png, jpg,jpeg files are supported");
+      if (file && file.size <= 1024 * 1024) {
+        if (!["gif", "png", "jpg", "jpeg"].includes(ext)) {
+          toast.error("Only gif, png, jpg,jpeg files are supported");
+          imageRef.current.value = null;
+          return;
+        } else {
+          setFileUploading(true);
+          // btnOuter.addClass("file_uploading");
+          //convert with media type
+          // var uploadedFile = URL.createObjectURL(e.target.files[0]);
+          // var uploadedFile = null;
+
+          //convert with base64 type
+          const reader = new FileReader();
+
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              finalImages = [...finalImages, reader.result];
+            }
+            if (finalImages?.length === selectedFiles?.length) {
+              setTimeout(function () {
+                setImage(finalImages);
+                setPreviewImage(finalImages);
+                imageRef.current.value = null;
+              }, 1500);
+            }
+          };
+          reader.readAsDataURL(file);
+        }
+      } else {
+        toast.error("File must be less than 1 MB.");
         imageRef.current.value = null;
         return;
-      } else {
-        setFileUploading(true);
-        // btnOuter.addClass("file_uploading");
-        //convert with media type
-        // var uploadedFile = URL.createObjectURL(e.target.files[0]);
-        // var uploadedFile = null;
-
-        //convert with base64 type
-        const reader = new FileReader();
-
-        reader.onload = () => {
-          if (reader.readyState === 2) {
-            finalImages = [...finalImages, reader.result];
-          }
-          if (finalImages?.length === selectedFiles?.length) {
-            setTimeout(function () {
-              setImage(finalImages);
-              setPreviewImage(finalImages);
-              imageRef.current.value = null;
-            }, 1500);
-          }
-        };
-        reader.readAsDataURL(file);
       }
     });
   };
