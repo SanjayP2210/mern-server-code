@@ -201,7 +201,6 @@
   z-index: 5;
   overflow-y: scroll;
   overflow-x: hidden;
-  width: 384px;
 }
 
 .container__overlay {
