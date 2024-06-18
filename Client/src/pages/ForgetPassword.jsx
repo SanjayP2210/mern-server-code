@@ -12,7 +12,7 @@ const ForgetPassword = () => {
     if (!email) toast.error("Please enter email");
     try {
       setLoading(true);
-      const response = await apiService.postRequest("user/forget-password", {
+      const response = await apiService.postRequest("auth/forget-password", {
         email: email,
       });
       if (!response.isError) {
