@@ -32,11 +32,11 @@ cloudinary.config({
 });
 
 
-const corsOptions = {
-  origin: '*',
-  credentials: true, // Allow credentials (cookies)
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: '*',
+//   credentials: true, // Allow credentials (cookies)
+// };
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(express.urlencoded({ extended: true }));
@@ -48,6 +48,9 @@ app.use('/api/contact', contactRouter);
 app.use('/api/technology', technologyRouter);
 app.use(errorMiddleware);
 
+app.get('/api/data', (req, res) => {
+  res.json({ message: 'Hello from backend!' });
+});
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../Client/dist/index.html"));
 });
@@ -68,7 +71,7 @@ process.on("uncaughtException", (err) => {
 connectDatabase();
 
 const server = app.listen(process.env.PORT, () => {
-  console.log(`Server is working on http://localhost:${process.env.PORT}`);
+  console.log(`Server is working on ${process.env.PORT}`);
 });
 
 // Unhandled Promise Rejection
