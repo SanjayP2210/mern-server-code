@@ -62,7 +62,7 @@ const userReducer = createSlice({
             state.error = null;
             state.user = {};
             state.users = [];
-
+            state.isUserUpdated = false;
         },
         // getUser: (state) => {
         //     return state.users;

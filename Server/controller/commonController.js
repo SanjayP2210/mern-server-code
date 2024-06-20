@@ -104,13 +104,20 @@ const uploadImage = async (imagePath) => {
         unique_filename: false,
         overwrite: true,
         folder: "users",
-        width: 150,
-        crop: 'scale',
+        // width: 150,
+        // crop: 'scale',
     };
 
     try {
         // Upload the image
-        const result = await cloudinary.uploader.upload(imagePath, options);
+        const result = await cloudinary.uploader.upload(imagePath, {
+            options,
+            transformation: [
+                { width: 1000, crop: "scale" },
+                { quality: "auto" },
+                { fetch_format: "auto" }
+            ]
+        });
         console.log(result);
         return result;
     } catch (error) {
@@ -128,6 +135,29 @@ const deleteImage = async (public_id) => {
     }
 };
 
+
+const handleImageUpload = async (req, res, image, public_id) => {
+    try {
+        if (!image.startsWith("https://res.cloudinary.com")) {
+            if (public_id != null && public_id !== 'null') {
+                await deleteImage(public_id);
+            }
+
+            const result = await uploadImage(image);
+            if (result) {
+                return {
+                    public_id: result?.public_id,
+                    url: result?.secure_url,
+                };
+            } else {
+                return req?.file?.filename || image[0];
+            }
+        }
+    } catch (error) {
+        console.log("err while upload image in update user", error);
+    }
+}
+
 export {
     postRequest,
     getAll,
@@ -136,5 +166,6 @@ export {
     patchRequest,
     deleteRequest,
     uploadImage,
-    deleteImage
+    deleteImage,
+    handleImageUpload
 }

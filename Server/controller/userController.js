@@ -3,7 +3,7 @@ import { sendToken } from "../middleware/sendToken.js";
 import userModel from "../models/userModel.js";
 import crypto from 'crypto';
 import { resetPassword } from "./authController.js";
-import { deleteImage, uploadImage } from "./commonController.js";
+import { handleImageUpload } from "./commonController.js";
 
 const getUser = async (req, res, next) => {
     try {
@@ -47,47 +47,24 @@ const getUserById = async (req, res, next) => {
     }
 };
 
-const handleImageUpload = async (req, res, image, public_id) => {
-    try {
-        if (!image.startsWith("https://res.cloudinary.com")) {
-            if (public_id != null && public_id !== 'null') {
-                await deleteImage(public_id);
-            }
-
-            const result = await uploadImage(image);
-            if (result) {
-                return {
-                    public_id: result?.public_id,
-                    url: result?.secure_url,
-                };
-            } else {
-                return req?.file?.filename || image[0];
-            }
-        }
-    } catch (error) {
-        console.log("err while upload image in update user", error);
-    }
-}
-
 const updateUser = async (req, res, next) => {
     try {
         const id = req.params.id;
         const body = req.body;
-        if (!body?.image.startsWith("https://res.cloudinary.com")) {
-            const { image_public_id = null, image } = body;
-            body.image = await handleImageUpload(req, res, image, image_public_id);
+        const image = JSON.parse(body?.image);
+        if (body?.newImage && image?.url?.startsWith("https://res.cloudinary.com")) {
+            const { public_id = null, url } = image;
+            const newImage = body?.newImage;
+            body.image = await handleImageUpload(req, res, newImage, public_id);
         } else {
-            body.image = {
-                public_id: body?.image.public_id,
-                url: body?.image,
-            };
+            body.image = image;
         }
         delete body.password;
         body.isAdmin = body.isAdmin === "true";
         body.technology = body?.technology.split(',');
         body.modifiedAt = Date.now();
         body.modifiedBy = req?.user?._id?.toString();
-        const userData = await userModel.updateOne({ _id: id }, { $set: body });
+        await userModel.updateOne({ _id: id }, { $set: body });
         res.json({ message: "User Updated Successfully", user: body });
     } catch (err) {
         console.log("err in updateUser", err);

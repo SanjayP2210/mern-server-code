@@ -16,7 +16,7 @@ const registerUser = async (req, res, next) => {
                 url: result?.secure_url,
             };
         } else {
-            image = req?.file?.filename || dataJson?.image[0];
+            image = '';
         }
         const technology = req.body.technology.split(',');
         const isFound = await userModel.findOne({ email: dataJson.email });
@@ -111,7 +111,7 @@ const forgetPassword = async (req, res, next) => {
             const response = await sendMail({
                 message,
                 email: user.email,
-                subject: 'Forget Password Link'
+                subject: 'Forget Password Link',
             });
             if (response?.isError) {
                 const error = response?.error;
@@ -125,7 +125,7 @@ const forgetPassword = async (req, res, next) => {
             if (response && response?.messageId) {
                 console.log('Message sent: %s', response?.messageId);
                 console.log('Preview URL: %s', response?.preview);
-                res.status(200).send({ message: `Mail sent successfully to ${response.messageId}`, response });
+                res.status(200).send({ message: `Mail sent successfully to ${response.messageId}`, resetUrl: resetUrl, response });
             }
 
         } catch (error) {

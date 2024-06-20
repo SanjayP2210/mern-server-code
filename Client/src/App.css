@@ -77,8 +77,8 @@
   visibility: visible;
   opacity: 1;
   color: var(--secondary-root-color);
-    text-shadow: 1px 1px 2px black, 0 0 1em blue, 0 0 0.2em blue;
-    font-weight: bold;
+  text-shadow: 1px 1px 2px black, 0 0 1em blue, 0 0 0.2em blue;
+  font-weight: bold;
 }
 
 .tooltip:hover .tooltip-text:before {
@@ -148,7 +148,7 @@
   width: 100%;
 }
 
-.profile-container{
+.profile-container {
   background-color: var(--white);
   border-radius: var(--button-radius);
   box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
@@ -159,14 +159,14 @@
   position: relative;
   width: 100%;
 
-  .container__overlay{
+  .container__overlay {
     height: 100%;
-      left: 0;
-      overflow: hidden;
-      position: absolute;
-      top: 0;
-      transition: transform 0.6s ease-in-out;
-      width: 100%;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    transition: transform 0.6s ease-in-out;
+    width: 100%;
   }
 }
 
@@ -302,16 +302,29 @@
   padding: 0 3rem;
   height: 100%;
   text-align: center;
+
+  .form-div{
+    width: 100%;
+  }
+  input {
+      background-color: #fff;
+      border: none;
+      padding: 0.9rem 0.9rem;
+      margin: 0.5rem 0;
+      width: 100%;
+      border-radius: 10px;
+      color: black;
+    }
 }
 
-.input {
-  background-color: #fff;
-  border: none;
-  padding: 0.9rem 0.9rem;
-  margin: 0.5rem 0;
-  width: 100%;
-  border-radius: 10px;
-  color: black;
+.login-eye-icon {
+  position: absolute;
+  top: 51%;
+  right: 40px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  font-size: 15px;
 }
 
 @keyframes show {
@@ -354,7 +367,7 @@
     .btn_upload {
       background-color: var(--blue) !important;
       background-image: linear-gradient(90deg, var(--blue) 0%, var(--lightblue) 74%) !important;
-      color:White !important;
+      color: White !important;
     }
   }
 }
@@ -388,12 +401,12 @@
 
 .eye-icon {
   position: absolute;
-    top: 70%;
-    right: 10px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    user-select: none;
-    font-size: 15px;
+  top: 70%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  font-size: 15px;
 }
 
 
@@ -438,18 +451,22 @@
 
 .strength {
   text-transform: capitalize;
-  color:black;
+  color: black;
   font-weight: bold;
 }
 
-.strength.weak{
-color: #d0424f !important;
+.strength.weak {
+  color: #d0424f !important;
 }
 
-.strength.medium{
+.strength.medium {
   color: #e58448 !important;
 }
 
-.strength.strong{
+.strength.strong {
   color: #1eb965 !important;
+}
+
+.image-uplad-border:hover{
+box-shadow: inset 0 0 0 0.2rem var(--bg-color);
 }

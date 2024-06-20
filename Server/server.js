@@ -14,6 +14,7 @@ import userRouter from './router/userRouter.js';
 import contactRouter from './router/contactRouter.js';
 import authRouter from './router/authRouter.js';
 import technologyRouter from './router/technologyRouter.js';
+import projectRouter from './router/projectRouter.js';
 import errorMiddleware from './middleware/error.js';
 import connectDatabase from './config/db.js';
 
@@ -46,6 +47,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/contact', contactRouter);
 app.use('/api/technology', technologyRouter);
+app.use('/api/project', projectRouter);
 app.use(errorMiddleware);
 
 app.get("*", (req, res) => {

@@ -100,7 +100,7 @@ function ResetPassword() {
                         />
                         <span
                           id="togglePassword"
-                          class="eye-icon"
+                          className="eye-icon"
                           onClick={(e) => {
                             const passwordInput =
                               document.getElementById("oldPassword");
@@ -134,7 +134,7 @@ function ResetPassword() {
                       />
                       <span
                         id="togglePassword"
-                        class="eye-icon"
+                        className="eye-icon"
                         onClick={(e) => {
                           const passwordInput =
                             document.getElementById("password");
@@ -169,7 +169,7 @@ function ResetPassword() {
                       />
                       <span
                         id="togglePassword"
-                        class="eye-icon"
+                        className="eye-icon"
                         onClick={(e) => {
                           const passwordInput =
                             document.getElementById("confirmPassword");

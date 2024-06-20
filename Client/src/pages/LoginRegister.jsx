@@ -2,9 +2,10 @@ import { useSelector } from "react-redux";
 import { Login } from "./Login";
 import { Register } from "./Register";
 import { useEffect } from "react";
+import Loader from "../components/Loader/Loader";
 
 const LoginRegister = () => {
-  const { isAdmin, isLoggedIn } = useSelector((state) => state.auth);
+  const { isAdmin, isLoggedIn, loading } = useSelector((state) => state.auth);
   const bodyEle = document.getElementsByTagName("body")[0];
   useEffect(() => {
     // const isHomePage = (window?.location?.pathname = "/");
@@ -14,10 +15,12 @@ const LoginRegister = () => {
       bodyEle.classList.remove("banner");
     }
   }, [bodyEle, location, isLoggedIn]);
+
   return (
     <div className="login-form">
       <div className="login-container">
         {/* <!-- Sign Up --> */}
+        <Loader visible={loading} />
         <div className="container__form container--signup signup-scrollbar">
           <Register bodyEle={bodyEle} />
         </div>

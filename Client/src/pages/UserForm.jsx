@@ -2,7 +2,11 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchUsersById, updateUser } from "../reducers/userReducer";
+import {
+  fetchUsersById,
+  resetUserState,
+  updateUser,
+} from "../reducers/userReducer";
 import {
   addUser,
   resetState,
@@ -14,6 +18,8 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import Loader from "../components/Loader/Loader.jsx";
 import { checkPassword } from "../constants/utilities.js";
+import Password from "../components/Password/password.jsx";
+import { SelectComponent } from "../components/Select/Select.jsx";
 
 const animatedComponents = makeAnimated();
 
@@ -64,6 +70,7 @@ export const UserForm = ({ isEdit = false, bodyEle }) => {
   }, [userData]);
 
   useEffect(() => {
+    if (!isEdit) return;
     if (technology?.length > 0) {
       const filterdList =
         userData?.technology?.map((x) => {
@@ -93,6 +100,8 @@ export const UserForm = ({ isEdit = false, bodyEle }) => {
         password: "",
         mobileNumber: "",
       });
+      setImage(null);
+      setSelectedTechnology([]);
     };
   }, []);
 
@@ -126,9 +135,13 @@ export const UserForm = ({ isEdit = false, bodyEle }) => {
         dispatch(updateLoginUserData(user));
         admin = user?.isAdmin === "true";
       }
-      if (admin) {
-        navigate("/admin/users");
-      }
+      dispatch(resetUserState());
+      navigate(-1);
+      // if (admin) {
+      //   navigate("/admin/users");
+      // } else {
+      //   navigate("/profile");
+      // }
     }
   }, [isUserUpdated]);
 
@@ -141,7 +154,8 @@ export const UserForm = ({ isEdit = false, bodyEle }) => {
         mobileNumber: "",
       });
       dispatch(resetState());
-      setImage(null)
+      setSelectedTechnology([]);
+      setImage(null);
       if (location?.pathname === "/") {
         const container = document.querySelector(".login-container");
         container.classList.remove("right-panel-active");
@@ -156,6 +170,8 @@ export const UserForm = ({ isEdit = false, bodyEle }) => {
         password: "",
         mobileNumber: "",
       });
+      setImage(null);
+      setSelectedTechnology([]);
     };
   }, [isUserAdded]);
 
@@ -193,7 +209,10 @@ export const UserForm = ({ isEdit = false, bodyEle }) => {
           //   imageList = [{ public_id: null, image: img }];
           // }
           // formData.append("image", JSON.stringify(imageList));
-          formData.append("image", image);
+          if (!image.startsWith("https://res.cloudinary.com")) {
+            formData.append("newImage", image);
+          }
+          formData.append("image", JSON.stringify(data[key]));
         } else {
           formData.append(key, data[key]);
         }
@@ -249,7 +268,13 @@ export const UserForm = ({ isEdit = false, bodyEle }) => {
             className="btn"
             style={{ marginRight: "10px" }}
             onClick={() => {
-              navigate("/admin/users");
+              // navigate("/admin/users");
+              navigate(-1);
+              // if (loginUserData?._id === data._id && data?.isAdmin) {
+              //   navigate("/admin/users");
+              // } else {
+              //   navigate("/profile");
+              // }
             }}
           >
             Cancel
@@ -276,100 +301,83 @@ export const UserForm = ({ isEdit = false, bodyEle }) => {
         <div>
           <form onSubmit={handleSubmit} className="form" id="form1">
             <h2 className="form__title">Sign Up</h2>
-
-            <input
-              type="text"
-              name="userName"
-              placeholder="userName"
-              id="userName"
-              required
-              autoComplete="off"
-              value={data.userName}
-              className="input"
-              onChange={handleInput}
-            />
-
-            <input
-              type="email"
-              name="email"
-              placeholder="enter your email"
-              id="email"
-              required
-              autoComplete="off"
-              value={data.email}
-              onChange={handleInput}
-              className="input"
-            />
-            <input
-              type="number"
-              name="mobileNumber"
-              placeholder="mobileNumber"
-              id="mobileNumber"
-              required
-              autoComplete="off"
-              value={data.mobileNumber}
-              maxLength={10}
-              onChange={handleInput}
-              className="input"
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="password"
-              id="password"
-              required
-              autoComplete="off"
-              value={data.password}
-              onChange={handleInput}
-              className="input"
-            />
-            <div>
-              <span style={{ color: "red" }}>
-                <strong>
-                  {" "}
-                  Password must contain 1 UpperCase, LoweCase and Number
-                </strong>
-              </span>
-              <div id="bars">
-                <div></div>
-              </div>
-              <div className="strength" id="strength"></div>
-            </div>
-            <Select
-              id="technology"
-              className="input"
-              name="technology"
-              value={selectedTechnology}
-              closeMenuOnSelect={true}
-              components={animatedComponents}
-              isMulti
-              options={technology}
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  // backgroundColor: "white",
-                  fontSize: "14px",
-                }),
-              }}
-              theme={(theme) => ({
-                ...theme,
-                borderRadius: 8,
-                colors: {
-                  ...theme.colors,
-                  primary25: "#b5b5b55e",
-                  primary: "white",
-                },
-              })}
-              onChange={onSelectTechnologies}
-              // classNamePrefix="react-select"
-            />
-            <br />
-            <div className="singup-button-color">
-              <UploadImage
-                multiple={false}
-                setImage={setImage}
-                data={userData}
+            <div className="form-div">
+              <input
+                type="text"
+                name="userName"
+                placeholder="userName"
+                id="userName"
+                required
+                autoComplete="off"
+                value={data.userName}
+                onChange={handleInput}
+                disabled={!isLoginUser}
               />
+            </div>
+
+            <div className="form-div">
+              <input
+                type="email"
+                name="email"
+                placeholder="enter your email"
+                id="email"
+                required
+                autoComplete="off"
+                value={data.email}
+                onChange={handleInput}
+                disabled={!isLoginUser}
+              />
+            </div>
+            <div className="form-div">
+              <input
+                type="number"
+                name="mobileNumber"
+                placeholder="mobileNumber"
+                id="mobileNumber"
+                required
+                autoComplete="off"
+                value={data.mobileNumber}
+                maxLength={10}
+                onChange={handleInput}
+                disabled={!isLoginUser}
+              />
+            </div>
+            <div className="form-div">
+              <Password
+                data={data}
+                lableShow={false}
+                handleInput={handleInput}
+                isLoginUser={isLoginUser}
+                eyeStyle={{ top: "55%" }}
+              />
+            </div>
+            <div className="form-div" style={{ color: "black" }}>
+              <SelectComponent
+                onChange={onSelectTechnologies}
+                value={selectedTechnology}
+                options={technology}
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    fontSize: "14px",
+                  }),
+                }}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 8,
+                  colors: {
+                    ...theme.colors,
+                    primary25: "#b5b5b55e",
+                    primary: "black",
+                  },
+                })}
+                name="technology"
+                id="technology"
+              />
+              <br />
+            </div>
+            <div className="singup-button-color">
+              <UploadImage multiple={false} setImage={setImage} data={data} />
             </div>
             {/* <UploadImage setImage={setImage} image={null} data={null} /> */}
             {renderButton()}
@@ -437,33 +445,13 @@ export const UserForm = ({ isEdit = false, bodyEle }) => {
                       </div>
                       {!isLoggedIn && (
                         <>
-                          <div>
-                            <label htmlFor="password">password</label>
-                            <input
-                              type="password"
-                              name="password"
-                              placeholder="password"
-                              id="password"
-                              required
-                              autoComplete="off"
-                              value={data.password}
-                              onChange={handleInput}
-                              disabled={!isLoginUser}
-                            />
-                          </div>
-                          <div>
-                            <span style={{ color: "red" }}>
-                              <strong>
-                                {" "}
-                                Password must contain 1 UpperCase, LoweCase and
-                                Number
-                              </strong>
-                            </span>
-                            <div id="bars">
-                              <div></div>
-                            </div>
-                            <div className="strength" id="strength"></div>
-                          </div>
+                          <Password
+                            data={data}
+                            lableShow={true}
+                            handleInput={handleInput}
+                            isLoginUser={isLoginUser}
+                            eyeStyle={{ top: "55%" }}
+                          />
                         </>
                       )}
                       {isAdmin && (
@@ -502,14 +490,9 @@ export const UserForm = ({ isEdit = false, bodyEle }) => {
                       )}
                       <div>
                         <label htmlFor="authorId">Technology</label>
-                        <Select
-                          id="technology"
-                          name="technology"
+                        <SelectComponent
+                          onChange={onSelectTechnologies}
                           value={selectedTechnology}
-                          closeMenuOnSelect={true}
-                          components={animatedComponents}
-                          isMulti
-                          disabled={!isLoginUser}
                           options={technology}
                           styles={{
                             control: (baseStyles, state) => ({
@@ -522,6 +505,8 @@ export const UserForm = ({ isEdit = false, bodyEle }) => {
                               color: "blue",
                             }),
                           }}
+                          name="technology"
+                          id="technology"
                           theme={(theme) => ({
                             ...theme,
                             borderRadius: 8,
@@ -531,8 +516,11 @@ export const UserForm = ({ isEdit = false, bodyEle }) => {
                               primary: "white",
                             },
                           })}
+                          closeMenuOnSelect={true}
+                          components={animatedComponents}
+                          isMulti
+                          disabled={!isLoginUser}
                           isDisabled={!isLoginUser}
-                          onChange={onSelectTechnologies}
                           className="react-select-container"
                           classNamePrefix="react-select"
                         />
@@ -542,7 +530,7 @@ export const UserForm = ({ isEdit = false, bodyEle }) => {
                         <UploadImage
                           setImage={setImage}
                           multiple={false}
-                          data={userData}
+                          data={data}
                           disabled={!isLoginUser}
                         />
                         {/* <UploadImage setImage={setImage} image={null} data={null} /> */}

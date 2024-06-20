@@ -27,12 +27,12 @@ export const Login = ({ bodyEle }) => {
         email: "",
         password: "",
       });
-      if (loginUserData?.isAdmin) {
-        navigate("/admin/users");
-      } else {
-        navigate("/home");
-        bodyEle.classList.add("banner");
-      }
+      // if (loginUserData?.isAdmin) {
+      //   navigate("/admin/users");
+      // } else {
+      // }
+      navigate("/home");
+      bodyEle.classList.add("banner");
     }
   }, [loginUserData, token]);
 
@@ -91,12 +91,31 @@ export const Login = ({ bodyEle }) => {
                           type="password"
                           name="password"
                           placeholder="password"
-                          id="password"
+                          id="password1"
                           required
                           autoComplete="off"
                           value={user.password}
                           onChange={handleInput}
                         />
+                        <span
+                          id="togglePassword"
+                          className="login-eye-icon"
+                          onClick={(e) => {
+                            const passwordInput =
+                              document.getElementById("password1");
+                            const type =
+                              passwordInput.getAttribute("type") === "password"
+                                ? "text"
+                                : "password";
+                            passwordInput.setAttribute("type", type);
+
+                            // Toggle the eye icon (optional)
+                            e.target.textContent =
+                              type === "password" ? "👁️" : "👁️‍🗨️";
+                          }}
+                        >
+                          👁️
+                        </span>
                       </div>
 
                       <br />
@@ -129,12 +148,31 @@ export const Login = ({ bodyEle }) => {
             placeholder="Password"
             className="input"
             name="password"
-            id="password"
+            id="password2"
             required
             autoComplete="off"
             value={user.password}
             onChange={handleInput}
           />
+          <div>
+            <span
+              id="togglePassword"
+              className="login-eye-icon"
+              onClick={(e) => {
+                const passwordInput = document.getElementById("password2");
+                const type =
+                  passwordInput.getAttribute("type") === "password"
+                    ? "text"
+                    : "password";
+                passwordInput.setAttribute("type", type);
+
+                // Toggle the eye icon (optional)
+                e.target.textContent = type === "password" ? "👁️" : "👁️‍🗨️";
+              }}
+            >
+              👁️
+            </span>
+          </div>
           <Link to="/forget-password" className="link">
             Forgot your password?
           </Link>

@@ -20,6 +20,9 @@ const UploadImage = ({ multiple = false, setImage, data, disabled }) => {
             : []
         );
       }
+    } else {
+      setFileUploading(false);
+      setPreviewImage([]);
     }
   }, [data]);
 
@@ -51,7 +54,11 @@ const UploadImage = ({ multiple = false, setImage, data, disabled }) => {
             }
             if (finalImages?.length === selectedFiles?.length) {
               setTimeout(function () {
-                setImage(finalImages);
+                if (multiple) {
+                  setImage(finalImages);
+                } else {
+                  setImage(finalImages[0]);
+                }
                 setPreviewImage(finalImages);
                 imageRef.current.value = null;
               }, 1500);

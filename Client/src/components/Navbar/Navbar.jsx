@@ -94,6 +94,12 @@ export const Navbar = () => {
                       Profile{" "}
                     </NavLink>
                   </li> */}
+                  <li className="navbar-item">
+                    <NavLink to="/project">Projects</NavLink>
+                  </li>
+                  <li className="navbar-item">
+                    <NavLink to="/booking">booking</NavLink>
+                  </li>
                   <li>
                     <NavLink to="/reset-password"> Reset Password </NavLink>
                   </li>

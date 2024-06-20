@@ -20,6 +20,10 @@ import Technology from "./pages/Technology.jsx";
 import ForgetPassword from "./pages/ForgetPassword.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
 import LoginRegister from "./pages/LoginRegister.jsx";
+import EditProject from "./pages/EditProject.jsx";
+import AddProject from "./pages/AddProject.jsx";
+import Projects from "./pages/Projects.jsx";
+import Booking from "./pages/Booking.jsx";
 
 function App() {
   return (
@@ -42,6 +46,11 @@ function App() {
             <Route path="profile" element={<Profile />} />
             <Route path="technology" element={<Technology />} />
             <Route path="user/:id/edit" element={<AdminUpdate />} />
+            <Route path="add-contact" element={<AdminContact />} />
+            <Route path="project" element={<Projects />} />
+            <Route path="booking" element={<Booking />} />
+            <Route path="add-project" element={<AddProject />} />
+            <Route path="edit-project/:id" element={<EditProject />} />
           </Route>
           <Route path="*" element={<Error />} />
           <Route path="/admin" element={<PrivateRoute />}>

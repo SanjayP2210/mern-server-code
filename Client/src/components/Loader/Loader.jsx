@@ -35,7 +35,7 @@ const Loader = ({ visible, style }) => {
             */}
 
             {/* third loader */}
-            <div class="waterfall">
+            <div className="waterfall">
               <div></div>
               <div></div>
               <div></div>

@@ -34,7 +34,7 @@ export const Home = () => {
                 <button
                   type="button"
                   onClick={() => {
-                    navigate("/contact");
+                    navigate("/add-contact");
                   }}
                 >
                   connect now{" "}
